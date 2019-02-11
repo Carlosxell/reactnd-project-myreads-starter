@@ -42,6 +42,7 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
+
             <div className="list-books-content">
               <div>
                 <div className="bookshelf">
@@ -195,6 +196,7 @@ class BooksApp extends React.Component {
                 </div>
               </div>
             </div>
+
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
             </div>
