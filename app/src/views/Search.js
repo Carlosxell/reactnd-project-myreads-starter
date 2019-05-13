@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { search } from '../BooksAPI';
+import CardBook from "../CardBook";
 
 class Search extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      searched: false,
+      list: [],
+      value: ''
+    };
+
+    this.getResults = this.getResults.bind(this);
+  }
+
+  async getResults(event) {
+    this.setState({ value: event.target.value.length ? event.target.value : '' });
+    this.setState({ searched: event.target.value.length });
+
+    if(event.target.value.length < 2) return;
+
+    await search(event.target.value).then(resp => {
+      this.setState({ list: (resp && !resp.error) ? resp : [] });
+    });
+  }
 
   render() {
     return (
@@ -10,20 +32,21 @@ class Search extends Component {
         <div className="search-books-bar">
           <Link className="close-search" to={'/'}>Close</Link>
           <div className="search-books-input-wrapper">
-            {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input onChange={ this.getResults }
+                   placeholder="Search by title or author"
+                   type="text"
+                   value={ this.state.value }  />
           </div>
         </div>
 
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          { this.state.list.length ? (
+              <ol className="books-grid">
+                { this.state.list.map(item => <CardBook key={ item.id } dados={ item } /> ) }
+              </ol>
+          ) : (
+            this.state.searched ? (<p className="search-books-noResults">Nenhum dado encontrado para essa busca</p>) : ('')
+          ) }
         </div>
       </div>
     );

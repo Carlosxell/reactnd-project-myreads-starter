@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CardBook from '../CardBook'
-import SelectType from '../SelectType';
+import CardBook from '../CardBook';
 import { getAll } from '../BooksAPI';
 
 class HomePage extends Component {
@@ -19,7 +18,6 @@ class HomePage extends Component {
       const currentlyReading = res.filter(it => it.shelf === 'currentlyReading');
 
       this.setState({ all: res, read, wantToRead, currentlyReading });
-      console.info(res, 'resposta da API');
     });
   }
 
