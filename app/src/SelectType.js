@@ -25,10 +25,12 @@ class SelectType extends Component {
     }]
   };
 
+  handleChange(ev) {}
+
   render() {
     return (
       <div className="book-shelf-changer">
-        <select>
+        <select value={ this.props.selecionado } onChange={ this.handleChange }>
           { this.state.listOptions.map((item, ind) => {
             return <option disabled={ item.id === 1 }
                            key={ item.id }
