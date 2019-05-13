@@ -11,6 +11,7 @@ class HomePage extends Component {
 
   componentDidMount() {
     getAll().then((res) => {
+      console.info(res, 'resposta da API');
       this.setState({ list: res });
     });
   }
@@ -24,7 +25,7 @@ class HomePage extends Component {
 
 
         <ul>
-          { this.state.list.map((item, index) => <li>{ index }</li>) }
+          { this.state.list.map((item, index) => <li key={ item.id }>{ index }</li>) }
         </ul>
 
         <div className="list-books-content">
