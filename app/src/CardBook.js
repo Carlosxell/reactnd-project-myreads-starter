@@ -13,7 +13,9 @@ class CardBook extends Component {
             <SelectType ident={ this.props.dados.id } selecionado={ this.props.dados.shelf } />
           </div>
           <div className="book-title">{ this.props.dados.title }</div>
-          <div className="book-authors">{ this.props.dados.authors.map((item, ind) => `${ item }, ` ) }</div>
+          { (this.props.dados.authors) ? (
+            <div className="book-authors">{ this.props.dados.authors.map((item, ind) => `${ item }, ` ) }</div>
+          ) : ('') }
         </div>
       </li>
     );
