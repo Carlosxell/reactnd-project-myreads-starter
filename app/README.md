@@ -1,3 +1,10 @@
+# Estante de livros
+Estou deixando a descrição anterior aqui para informações gerais. No projeto foram criadas duas rotas, uma para busca e outra para a home principal. Foram feitas as funcionalidades de busca e a home principal através das API's.
+
+### Getting Started
+
+Abra dois terminais dentro da pasta do projeto, em um deles entre na pasta 'app' e digite como administrador o comando 'yarn install' e após a instalação o comando 'yarn start', no outro terminal entre na pasta 'server' digite o mesmo comando ('yarn install') como administrador para instalar as dependências e em seguida efetue o comando 'node server.js'
+
 # MyReads Project
 
 This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
