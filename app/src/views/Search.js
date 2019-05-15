@@ -19,6 +19,8 @@ class Search extends Component {
     this.setState({ value: event.target.value.length ? event.target.value : '' });
     this.setState({ searched: event.target.value.length });
 
+    if(!event.target.value.length) return this.setState({ list: [] });
+
     await search(event.target.value).then(resp => {
       this.setState({ list: (resp && !resp.error) ? resp : [] });
     });
