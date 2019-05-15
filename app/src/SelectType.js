@@ -33,7 +33,6 @@ class SelectType extends Component {
 
   async handleChange(obj) {
     await update({id : obj.ident }, obj.value).then(res => {
-      console.info(res, 'resposta de alteração');
       this.setState({ value: obj.value });
       return obj.changeType();
     });
