@@ -1,7 +1,4 @@
 # Estante de livros
-O Projeto em síe é uma estante virtual de livros que serve para registrar quais já foram lidos, estão em leitura ou que serão lidos futuramente
-
-
 Estou deixando a descrição anterior aqui para informações gerais. No projeto foram criadas duas rotas, uma para busca e outra para a home principal. Foram feitas as funcionalidades de busca e a home principal através das API's.
 
 ### Getting Started
