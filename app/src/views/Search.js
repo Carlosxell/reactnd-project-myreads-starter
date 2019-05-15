@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { search } from '../BooksAPI';
+import {getAll, search} from '../BooksAPI';
 import CardBook from "../CardBook";
 
 class Search extends Component {
@@ -9,14 +9,24 @@ class Search extends Component {
     this.state = {
       searched: false,
       list: [],
-      value: ''
+      value: '',
+      all: [],
     };
 
     this.getResults = this.getResults.bind(this);
-    this.fnToNotBroken = this.fnToNotBroken.bind(this);
+    this.updateList = this.updateList.bind(this);
   }
 
-  fnToNotBroken() {}
+  componentDidMount() {
+    this.updateList();
+  }
+
+  updateList() {
+    getAll().then((res) => {
+      this.setState({ all: res });
+      console.info(res, 'lista de livros que já tem');
+    });
+  }
 
   async getResults(event) {
     this.setState({ value: event.target.value.length ? event.target.value : '' });
@@ -25,8 +35,22 @@ class Search extends Component {
     if(!event.target.value.length) return this.setState({ list: [] });
 
     await search(event.target.value).then(resp => {
-      console.info(resp, 'resposta da API');
-      this.setState({ list: (resp && !resp.error) ? resp : [] });
+      let list = [];
+
+      if((resp && !resp.error)) {
+        list = resp.filter(item => {
+          this.state.all.forEach((it => {
+            if(it.id === item.id) {
+              item.shelf = it.shelf;
+              return item;
+            }
+          }));
+
+          return item;
+        });
+      }
+
+      this.setState({ list: (resp && !resp.error) ? list : [] });
     });
   }
 
@@ -46,7 +70,7 @@ class Search extends Component {
         <div className="search-books-results">
           { this.state.list.length ? (
               <ol className="books-grid">
-                { this.state.list.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.fnToNotBroken } /> ) }
+                { this.state.list.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.updateList } /> ) }
               </ol>
           ) : (
             this.state.searched ? (<p className="search-books-noResults">Nenhum dado encontrado para essa busca</p>) : ('')
