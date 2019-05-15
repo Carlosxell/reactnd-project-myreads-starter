@@ -13,7 +13,10 @@ class Search extends Component {
     };
 
     this.getResults = this.getResults.bind(this);
+    this.fnToNotBroken = this.fnToNotBroken.bind(this);
   }
+
+  fnToNotBroken() {}
 
   async getResults(event) {
     this.setState({ value: event.target.value.length ? event.target.value : '' });
@@ -22,6 +25,7 @@ class Search extends Component {
     if(!event.target.value.length) return this.setState({ list: [] });
 
     await search(event.target.value).then(resp => {
+      console.info(resp, 'resposta da API');
       this.setState({ list: (resp && !resp.error) ? resp : [] });
     });
   }
@@ -42,7 +46,7 @@ class Search extends Component {
         <div className="search-books-results">
           { this.state.list.length ? (
               <ol className="books-grid">
-                { this.state.list.map(item => <CardBook key={ item.id } dados={ item } /> ) }
+                { this.state.list.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.fnToNotBroken } /> ) }
               </ol>
           ) : (
             this.state.searched ? (<p className="search-books-noResults">Nenhum dado encontrado para essa busca</p>) : ('')

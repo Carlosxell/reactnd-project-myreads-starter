@@ -3,6 +3,7 @@ import { update } from "./BooksAPI";
 
 class SelectType extends Component {
   state = {
+    value: '',
     listOptions: [{
       id: 1,
       text: 'Move to...',
@@ -26,16 +27,22 @@ class SelectType extends Component {
     }]
   };
 
+  componentDidMount() {
+    this.setState({ value: this.props.selecionado ? this.props.selecionado : 'none' });
+  }
+
   async handleChange(obj) {
     await update({id : obj.ident }, obj.value).then(res => {
       console.info(res, 'resposta de alteração');
+      this.setState({ value: obj.value });
+      return obj.changeType();
     });
   }
 
   render() {
     return (
       <div className="book-shelf-changer">
-        <select value={ this.props.selecionado ? this.props.selecionado : 'none' }
+        <select value={ this.state.value }
                 onChange={ (ev) => this.handleChange({ ...this.props, value: ev.target.value }) }>
           { this.state.listOptions.map((item, ind) => {
             return <option disabled={ item.id === 1 }

@@ -13,7 +13,9 @@ class CardBook extends Component {
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{ backgroundImage: `url(${ img ? img : imgFallback })` }}></div>
-            <SelectType ident={ this.props.dados.id } selecionado={ this.props.dados.shelf } />
+            <SelectType ident={ this.props.dados.id }
+                        selecionado={ this.props.dados.shelf }
+                        changeType={ () => this.props.fnUpdate() } />
           </div>
           <div className="book-title">{ this.props.dados.title }</div>
           { (this.props.dados.authors) ? (

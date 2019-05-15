@@ -4,14 +4,23 @@ import CardBook from '../CardBook';
 import { getAll } from '../BooksAPI';
 
 class HomePage extends Component {
-  state = {
-    all: [],
-    read: [],
-    wantToRead: [],
-    currentlyReading: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      all: [],
+      read: [],
+      wantToRead: [],
+      currentlyReading: [],
+    };
+
+    this.updateList = this.updateList.bind(this);
   };
 
   componentDidMount() {
+    this.updateList();
+  }
+
+  updateList() {
     getAll().then((res) => {
       const read = res.filter(it => it.shelf === 'read');
       const wantToRead = res.filter(it => it.shelf === 'wantToRead');
@@ -40,7 +49,7 @@ class HomePage extends Component {
 
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    { this.state.currentlyReading.map(item => <CardBook key={ item.id } dados={ item } />) }
+                    { this.state.currentlyReading.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.updateList } />) }
                   </ol>
                 </div>
               </div>
@@ -53,7 +62,7 @@ class HomePage extends Component {
 
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    { this.state.wantToRead.map(item => <CardBook key={ item.id } dados={ item } />) }
+                    { this.state.wantToRead.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.updateList } />) }
                   </ol>
                 </div>
               </div>
@@ -66,7 +75,7 @@ class HomePage extends Component {
 
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    { this.state.read.map(item => <CardBook key={ item.id } dados={ item } />) }
+                    { this.state.read.map(item => <CardBook key={ item.id } dados={ item } fnUpdate={ this.updateList } />) }
                   </ol>
                 </div>
               </div>
